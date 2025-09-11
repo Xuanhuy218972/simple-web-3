@@ -11,3 +11,10 @@ require_relative 'lib/middleware/logger_middleware'
 use Rack::Static, root: 'public', urls: ['/css', '/images', '/js']
 use LoggerMiddleware 
 
+use Rack::Session::Cookie, 
+    key:'rack.session',
+    path: '/',
+    secret: 'your_secret_key_0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+
+run Frack::Application
+
