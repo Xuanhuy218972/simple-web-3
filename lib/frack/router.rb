@@ -54,3 +54,4 @@ module Frack
       self.routes.merge!(route.keys.first + 'GET' => route.values.first )
     end
   end
+end

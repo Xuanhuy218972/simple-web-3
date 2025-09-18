@@ -4,15 +4,16 @@ module Frack
 
     def initialize(env)
       @request = Rack::Request.new(env)
-      @flash_message = request.session&delete('flash')
-      @current_user = User.find_by_id request_session['user_id']
+      @session = @request.session
+      @flash_message = @session && @session.delete('flash')
+      @current_user = defined?(User) && @session ? User.find_by_id(@session['user_id']) : nil
     end
 
     def render(view)
-    render_template('layouts/application') do
-      render_template(view)
+      render_template('layouts/application') do
+        render_template(view)
+      end
     end
-  end
 
     def render_template(path, &block)
       Tilt.new(file(path)).render(self, &block)

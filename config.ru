@@ -1,15 +1,16 @@
 $LOAD_PATH.unshift << '.'
 
+require 'rack/session'
+
 require_relative 'lib/frack'
-require_relative 'app/controllers/application_controller'
+require_relative 'app/controllers/users_controller'
 require_relative 'app/controllers/home_controller'
 require_relative 'app/controllers/sessions_controller'
 require_relative 'app/models/user'
-require_relative 'rack/session/cookie'
-require_relative 'lib/middleware/logger_middleware'
+ 
 
 use Rack::Static, root: 'public', urls: ['/css', '/images', '/js']
-use LoggerMiddleware 
+ 
 
 use Rack::Session::Cookie, 
     key:'rack.session',
@@ -18,6 +19,11 @@ use Rack::Session::Cookie,
 
 use Frack::Router do
     get "/" => "home#show"
+    get '/sign_up' => 'users#new'
+    post '/users/sign_up' => 'users#create'
+    post '/sign_in' => 'sessions#create'
+    delete '/sign_out' => 'sessions#destroy'
+    get '/users' => 'users#index'
 end
 
 run Frack::Application

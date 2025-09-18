@@ -5,7 +5,7 @@ module Frack
 
       def call(env)
         self.env = env
-        Rack::Respone.new(dispatch).finish
+        Rack::Response.new(dispatch).finish
       end
 
       def dispatch
