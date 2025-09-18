@@ -16,5 +16,9 @@ use Rack::Session::Cookie,
     path: '/',
     secret: 'your_secret_key_0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
 
+use Frack::Router do
+    get "/" => "home#show"
+end
+
 run Frack::Application
 
